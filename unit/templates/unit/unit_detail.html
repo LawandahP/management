@@ -1,0 +1,126 @@
+{% extends 'landlord/base.html' %}
+{% block content %}
+{% load static %}
+<style>
+.w3-card, w3-round {
+  font-size: 40;
+  padding: 50px 50px 50px 50px
+}
+
+h1, h2, h3, h4{
+  color: #191970;
+  font-weight: bold;
+}
+.fas fa-user-tie {
+  font-size: 55px;
+}
+
+table {
+ text-align: left;
+}
+
+#vacate {
+  color: white;
+  background-color: #191970;
+}
+#vacate:hover {
+transform: scale(1.05);
+}
+</style>
+<div class="form-group">
+  <a class="badge badge-secondary" href="{% url 'dashboard' %}">Home</a>
+   <a class="badge badge-primary" href="{% url 'list-unit' %}">All Units</a>
+    {% if object.confirm_allocation and object.tenant %}
+    <span class="badge badge-info">Occupied-Unit detail</span>
+    {% elif not object.confirm_allocation and not object.tenant%}
+    <span class="badge badge-info">Vacant-Unit detail</span>
+    {% endif %}
+</div>
+
+<div class="w3-card w3-round w3-center w3-white w3-padding">
+  <div class="row">
+    <div class="col-sm-5">
+      <img src="{% static 'media/home.png' %}" class="img-circle" alt="" width="200" height="190">
+    </div>
+
+    <div class="col-sm-6">
+        <a class="text"><h4>UNIT NO. {{object.unit_no}}</h4></a>
+        <ul class="list-group">
+          <li class="list-group-item d-flex justify-content-between align-items-center">In Apartment:<span class="badge badge-primary right"> {{object.select_apartment}}</span></li>
+          <li class="list-group-item d-flex justify-content-between align-items-center">Unit Type:<span class="badge">{{object.unit_type}}</span></li>
+          <li class="list-group-item d-flex justify-content-between align-items-center">Rent per Month:<span class="badge">{{object.rent}}</span></li>
+
+            {% if object.confirm_allocation and object.tenant %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">Occupying Tenant:<span class="badge">{{object.tenant}}</span></li>
+          <li class="list-group-item d-flex justify-content-between align-items-center">Paid Deposit:<span class="badge badge-primary">{{object.deposit}}</span></li>
+          <li class="list-group-item d-flex justify-content-between align-items-center">Paid Rent(Kshs):<span class="badge">{{object.rent_paid}}</span></li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">Date of Entry:<span class="badge">{{object.placement_date}}</span></li>
+        </ul>
+         {% endif %}
+      <br>
+      <div class="form-group">
+      {% if object.confirm_allocation and object.tenant %}
+        <a class="btn btn-info" href="{% url 'update-allocate' object.id %}">Edit Unit Info</a>
+        <a class="btn btn-danger" href="{% url 'delete-unit' object.id %}">Delete</a>
+      {% endif %}
+      <br>
+      {% if not object.confirm_allocation and not object.unit %}
+          {% if object.unit is None %}
+        <a class="btn btn-info" href="{% url 'update-unit' object.id %}">Edit</a>
+        <a class="btn btn-danger" href="{% url 'delete-unit' object.id %}">Delete</a>
+        {% endif %}
+          {% endif %}
+
+      </div>
+    </div>
+</div>
+</div>
+<br>
+{% if object.tenant %}
+<div class="w3-card w3-round w3-white w3-padding">
+  <div class="form-group">
+    <h4>Occupant</h4>
+  </div>
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Gender</th>
+          <th>ID No.</th>
+          <th>Phone No.</th>
+          <th>Occupation</th>
+            <th>At</th>
+          <th>Email</th>
+          <th>Details</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{{object.tenant.Tenant_Full_Names}}</td>
+          <td>{{object.tenant.gender}}</td>
+          <td>{{object.tenant.National_ID}}</td>
+          <td>{{object.tenant.phone_number1}}</td>
+          <td>{{object.tenant.occupation_status }}</td>
+            <td>{{object.tenant.at }}</td>
+          <td>{{object.tenant.email }}</td>
+          <td><a class="btn btn-primary" href="{% url 'vacate-tenant' object.id %}" role="button">Vacate</a></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+{% elif not object.tenant %}
+<div class="w3-card w3-white w3-round w3-padding w3-center">
+    <p class="text-muted">This Unit is Vacant..Please assign to a Tenant</p>
+    <a class="btn" id="vacate" href="{% url 'assign-unit' object.id %}" role="button">Assign</a>
+</div>
+
+
+{% endif %}
+
+
+
+
+
+{% endblock content %}

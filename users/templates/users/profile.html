@@ -1,0 +1,102 @@
+{% extends 'landlord/base.html' %}
+{% block content %}
+<style>
+.w3-btn {
+background-color: #191970;
+color: white;
+}
+.w3-btn:hover {
+    color: white;
+    transform: scale(1.01);
+</style>
+<div class="row">
+     <div class="col-sm-4">
+        <div class="w3-container">
+            <div class="w3-card w3-padding w3-round w3-white">
+              <div class="w3-center">
+                <img class="rounded-circle account-img" width="200px" height="200px" src={{request.user.profile.image.url}}>
+                 <h4 style="color: #191970;">{{user.Tenant_Full_Names}}</h4>
+                <ul class="list-group">
+                    <li class="list-group-item d-flex justify-content-between align-items-center">Username<span class="badge badge-primary right">{{user.username}}</span></li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">Email<span class="badge">{{user.email}}</span></li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">Phone Number(work)<span class="badge">{{user.phone_number1}}</span></li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">Phone Number(home)<span class="badge">{{user.phone_number2}}</span></li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">ID Number<span class="badge badge-primary">{{user.National_ID}}</span></li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">Occ. Status<span class="badge">{{user.occupation_status}}</span></li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">@<span class="badge">{{user.at}}</span></li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">Marital Status<span class="badge">{{request.user.profile.marital_status}}</span></li>
+                </ul>
+                <a class="w3-btn w3-round w3-section w3-ripple w3-block" href="{% url 'update' %}" id="settings" type="button">Account Settings</a>
+            </div>
+        </div>
+     </div>
+    {% if request.user.is_tenant %}
+     <div class="col-sm-8">
+         <div class="w3-container">
+            <div class="w3-card w3-round w3-white w3-padding">
+                <div class="form-group">
+                  <h4 style="color: #191970;">Occupying Unit</h4>
+                </div>
+                <div class="table-responsive">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                          <th>Unit No.</th>
+                          <th>Type</th>
+                          <th>Building</th>
+                          <th>Rent</th>
+                          <th>Deposit Paid</th>
+                          <th>Rent Paid</th>
+                          <th>D.O.E</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    {% for unit in units %}
+                      <tr>
+                        <td>{{unit.unit_no}}</td>
+                        <td>{{unit.unit_type}}</td>
+                        <td>{{unit.select_apartment}}</td>
+                        <td>{{unit.rent}}</td>
+                        <td>{{unit.deposit}}</td>
+                        <td>{{unit.rent_paid}}</td>
+                        <td>{{unit.placement_date}}</td>
+                      </tr>
+                    {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+             <br>
+             <div class="w3-card w3-padding w3-white w3-round">
+                <h4 style="color: #191970;">Bills</h4>
+                <div class="table-responsive">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th>Bill Name</th>
+                          <th>Amount</th>
+                          <th>Date.</th>
+                            <th>For Unit</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                      {% for bill in bills %}
+                        {% for unit in units %}
+                          <tr>
+                            <td>{{bill.bill}}</td>
+                            <td>{{bill.amount}}</td>
+                            <td>{{bill.date}}</td>
+                              <td>{{unit.unit_no}}</td>
+                          </tr>
+                      {% endfor %}
+                      {% endfor %}
+                      </tbody>
+                    </table>
+                  </div>
+             </div>
+        </div>
+    </div>
+</div>
+ {% endif %}
+
+{% endblock content %}

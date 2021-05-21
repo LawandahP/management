@@ -1,0 +1,51 @@
+{% extends 'landlord/base.html' %}
+{% block content %}
+{% load crispy_forms_tags %}
+<style>
+.card {
+  font-size: 10;
+  padding: 10px 10px 10px 10px
+}
+h3, h2 {
+  color:#191970;
+  font-weight: bold;
+}
+.btn {
+    background-color: #191970;
+    color: white;
+}
+.btn:hover {
+    color: white;
+    transform: scale(1.05);
+}
+
+#viewList {
+  color: white;
+  background-color: #FA8072;
+}
+#viewList:hover {
+transform: scale(1.05);
+}
+</style>
+<div class="form-group">
+  <a class="badge badge-secondary" href="{% url 'dashboard' %}">Home</a>
+   <span class="badge badge-danger">Add Apartment</span>
+</div>
+
+<div class="w3-card w3-round w3-white w3-padding">
+  <h2> Register New Apartment</h2>
+  <p class="text-muted">After Apartment is registered successfully, you'll proceed and attach Units to the Registered Apartment</p>
+  <form method="POST">
+    {% csrf_token %}
+
+      {{ form|crispy }}
+
+    <div class="form-group">
+      <button type="submit" class="btn">save</button>
+      <a class="btn" id="viewList" href="{% url 'list-apartment' %}">cancel</a>
+    </div>
+  </form>
+</div>
+
+{% endblock content %}
+

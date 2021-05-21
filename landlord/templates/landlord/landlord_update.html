@@ -1,0 +1,52 @@
+{% extends 'landlord/base.html' %}
+{% block content %}
+{% load crispy_forms_tags %}
+<style>
+.card {
+  font-size: 10;
+  padding: 10px 10px 10px 10px
+}
+h3, h2 {
+  color:#191970;
+  font-weight: bold;
+}
+.btn {
+    background-color: #FA8072;
+    color: white;b
+}
+.btn:hover {
+    color: white;
+    transform: scale(1.1);
+}
+#update {
+    background-color: #191970;
+    color: white;
+}
+#update:hover {
+    transform: scale(1.1);
+    color: white;
+}
+
+</style>
+<div class="form-group">
+  <a class="badge badge-secondary" href="{% url 'dashboard' %}">Home</a>
+  <a class="badge badge-danger" href="{% url 'landlord-list' %}">All Landlords</a>
+  <span class="badge badge-primary">Landlord detail</span>
+   <span class="badge badge-warning">Update Landlord</span>
+</div>
+<div class="w3-card w3-round w3-white w3-padding">
+  <h2>Edit Landlord</h2>
+    <form method="POST">
+    {% csrf_token %}
+
+      {{ form|crispy }}
+
+    <div class="form-group">
+      <button type="submit" id="update" class="btn">update</button>
+      <a class="btn" href="{% url 'landlord-list' %}" type="button">cancel</a>
+    </div>
+  </form>
+</div>
+
+
+{% endblock content %}

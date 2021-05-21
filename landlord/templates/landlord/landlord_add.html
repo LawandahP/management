@@ -1,0 +1,131 @@
+{% extends 'landlord/base.html' %}
+{% block content %}
+<!--{% load crispy_forms_tags %}-->
+<style>
+.card {
+  font-size: 10;
+  padding: 10px 10px 10px 10px
+}
+h3 {
+  color:#191970;
+  font-weight: bold;
+}
+.btn {
+    background-color: #191970;
+    color: white;
+}
+.btn:hover {
+    color: white;
+    transform: scale(1.05);
+}
+
+#viewList {
+  color: white;
+  background-color: #FA8072;
+}
+#viewList:hover {
+transform: scale(1.05);
+}
+
+</style>
+<div class="form-group">
+  <a class="badge badge-secondary" href="{% url 'dashboard' %}">Home</a>
+   <span class="badge badge-danger">Add Landlord</span>
+</div>
+
+
+<div class="w3-card w3-round w3-white w3-padding">
+  <div class="w3-row w3-section">
+    <div class="form-group">
+      <h3 style="color:#191970;"> Register New Landlord</h3>
+      <p class="text-muted">After Landlord is registered successfully, you'll proceed and attach Apartments to the registered Landlord.</p>
+    </div>
+  </div>
+
+  <form action="{% url 'add-landlord' %}" method="POST">
+      {{form.non_field_errors}}
+    {% csrf_token %}
+      <form method="POST">
+    {% csrf_token %}
+
+      {{ form|crispy }}
+
+    <div class="form-group">
+      <button type="submit" class="btn">save</button>
+      <a class="btn" ID="viewList" href="{% url 'landlord-list' %}">cancel</a>
+    </div>
+  </form>
+</div>
+{% endblock content %}
+
+
+
+
+
+
+
+
+
+
+<!--<div class="form-row">-->
+<!--        <div class="form-group col-md-5">-->
+<!--          <label>First Name</label>-->
+<!--          <input type="text" {{form.myfield.errors}} name="First_Name" class="form-control" id="firstname" placeholder="Enter First Name.." required>-->
+<!--        </div>-->
+
+<!--        <div class="form-group col-md-7">-->
+<!--          <label for="Middle_Name">Middle Name</label>-->
+<!--          <input type="text" {{form.myfield.errors}} name="Middle_Name" class="form-control" id="middlename" placeholder="Enter Middle Name.." required>-->
+<!--        </div>-->
+<!--      </div>-->
+
+<!--      <div class="form-row">-->
+<!--        <div class="form-group col-md-12">-->
+<!--          <label for="Last_Name">Last Name</label>-->
+<!--          <input type="text" {{form.myfield.errors}} name="Last_Name" class="form-control" id="lastname" placeholder="Enter Last Name.." required>-->
+<!--        </div>-->
+<!--      </div>-->
+
+<!--      <div class="form-row">-->
+<!--        <div class="form-group col-md-5">-->
+<!--          <label for="gender">Gender</label>-->
+<!--            <input name="{{form.gender}}">-->
+
+<!--        </div>-->
+
+<!--        <div class="form-group col-md-7">-->
+<!--          <label for="email">Email Address</label>-->
+<!--          <input type="text" {{form.myfield.errors}} name="email" class="form-control" id="email" placeholder="Email Address..">-->
+<!--        </div>-->
+<!--      </div>-->
+
+<!--    `<div class="form-row">-->
+<!--        <div class="form-group col-md-5">-->
+<!--          <label for="National_ID">Identification Number</label>-->
+<!--          <input type="text" {{form.myfield.errors}} name="National_ID" class="form-control" id="National_ID" placeholder="Enter ID No.." required>-->
+<!--        </div>-->
+
+<!--        <div class="form-group col-md-4">-->
+<!--          <label for="phone_number1">Phone(work)</label>-->
+<!--          <input type="text" {{form.myfield.errors}} name="phone_number1" class="form-control" id="phone_number1" placeholder="Enter work phone number.." required>-->
+<!--        </div>-->
+<!--        <div class="form-group col-md-3">-->
+<!--          <label for="phone_number2">Phone(home)</label>-->
+<!--          <input type="text"  name="phone_number2" class="form-control" id="phone_number2" placeholder="Enter home phone No.." required>{{form.phone_number2.errors}}-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    `<div class="form-row">-->
+<!--        <div class="form-group col-md-12">-->
+<!--          <label for="post_office_box">P.O Box</label>-->
+<!--          <input type="text" {{form.myfield.errors}} name="post_office_box" class="form-control" id="post_office_box" placeholder="post office box ..">-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    <div class="form-group">-->
+<!--      <button type="submit" class="w3-btn w3-red w3-round">save</button>-->
+<!--        <a class="w3-btn w3-indigo w3-round" href="{% url 'landlord-list' %}">view list</a>-->
+<!--    </div>-->
+<!--  </form>-->
+<!--</div>-->
+
+
+

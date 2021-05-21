@@ -1,0 +1,178 @@
+{% extends 'landlord/base.html' %}
+{% block content %}
+{% load static %}
+<style>
+.w3-card, w3-round {
+  padding-left: 5px;
+}
+
+#occupied {
+  color: white;
+  background-color: #191970;
+}
+#btn {
+    background-color: #FA8072;
+    color: white;
+}
+#btn:hover {
+    color: white;
+    transform: scale(1.05);
+}
+
+#vacate {
+  color: white;
+  background-color: #191970;
+}
+#vacate:hover {
+transform: scale(1.05);
+}
+
+table {
+ text-align: left;
+}
+
+h1, h2, h3, h4{
+  color: #191970;
+  font-weight: bold;
+}
+.fas fa-user-tie {
+  font-size: 55px;
+}
+
+</style>
+
+
+<div class="form-group">
+  <a class="badge badge-secondary" href="{% url 'dashboard' %}">Home</a>
+   <a class="badge badge-primary" href="{% url 'list-user' %}">All Tenants</a>
+  <span class="badge badge-info">Tenant detail</span>
+</div>
+
+     <div class="row">
+        <div class="col-sm-5">
+            <div class="w3-container">
+                <div class="w3-card w3-round w3-white w3-center w3-padding">
+                    <img class="rounded-circle account-img" width="200px" height="200px" src={{tenant.profile.image.url}}>
+                    <a class="text"><h4>{{tenant.Tenant_Full_Names|upper}}</h4></a>
+                     <ul class="list-group">
+                        <li class="list-group-item d-flex justify-content-between align-items-center">Username:<span class="badge badge-primary right"> {{tenant.username}}</span></li>
+                         <li class="list-group-item d-flex justify-content-between align-items-center">Date Registered:<span class="badge badge-primary right"> {{tenant.date_joined}}</span></li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">Gender:<span class="badge"> {{tenant.gender}}</span></li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">ID No:<span class="badge">{{tenant.National_ID}}</span></li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">Phone Number(work):<span class="badge">{{tenant.phone_number1}}</span></li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">Phone Number(home):<span class="badge badge-primary">{{tenant.phone_number2}}</span></li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">Occupation:<span class="badge">{{tenant.occupation_status}}</span></li>
+                         <li class="list-group-item d-flex justify-content-between align-items-center">@:<span class="badge badge-primary">{{tenant.at}}</span></li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">Email:<span class="badge">{{tenant.email}}</span></li>
+                    </ul>
+                    <br>
+                  <div class="form-group">
+                    <a class="btn btn-info" href="{% url 'update-user' tenant.id %}">Edit Tenant Info</a>
+                    <a class="btn btn-danger" href="{% url 'delete-user' tenant.id %}">Delete</a>
+                  </div>
+                </div>
+            </div>
+        </div>
+
+        {% if units %}
+        <div class="col-sm-7">
+            <div class="container-fluid">
+                <div class="w3-card w3-round w3-white w3-padding">
+                      <h4>Occupying Unit</h4>
+                    <div class="table-responsive">
+                      <table class="table">
+                        <thead>
+                          <tr>
+                             <th>Unit No.</th>
+                            <th>Type</th>
+                              <th>Building</th>
+                            <th>Rent(Monthly)</th>
+                              <th>Deposit Paid</th>
+                              <th>Rent Paid</th>
+                              <th>D.O.E</th>
+                              <th>Status</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                            {% for unit in units %}
+                              <tr>
+                                <td>{{unit.unit_no}}</td>
+                                <td>{{unit.unit_type}}</td>
+                                <td>{{unit.select_apartment}}</td>
+                                <td>{{unit.rent}}</td>
+                              <td>{{unit.deposit}}</td>
+                              <td>{{unit.rent_paid}}</td>
+                              <td>{{unit.placement_date}}</td>
+                              {% if unit.confirm_allocation and unit.tenant %}
+                                <td><button class="btn" id="occupied" role="button">occupied <i class="fas fa-users"></i></button></td>
+                              {% endif %}
+                            </td>
+                          </tr>
+                        {% endfor %}
+                        </tbody>
+                      </table>
+                    </div>
+                </div>
+                    <br>
+                <div class="w3-card w3-round w3-white w3-padding">
+                    <h4>Bills</h4>
+                    <div class="table-responsive">
+                        <table class="table">
+                          <thead>
+                            <tr>
+                              <th>Bill Name</th>
+                              <th>Amount</th>
+                              <th>Date.</th>
+                                <th>For Unit</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                          {% if bills %}
+                          {% for bill in bills %}
+                            {% for unit in units %}
+                              <tr>
+                                <td>{{bill.bill}}</td>
+                                <td>{{bill.amount}}</td>
+                                <td>{{bill.date}}</td>
+                                <td>{{unit.unit_no}}</td>
+                                <td><td><a class="btn btn-info" href="{% url 'update-bills' bill.id %}" role="button">Update</a></td></td>
+                                <td><td><a class="btn btn-danger" href="{% url 'delete-bills' bill.id %}" role="button">Delete</a></td></td>
+                              </tr>
+                          {% endfor %}
+                          {% endfor %}
+                          {% endif %}
+                          {% if not bills %}
+                          <div class="w3-card w3-round w3-white w3-center">
+                              <p class="text-muted">no bills attached for this tenant</p>
+                          </div>
+
+                          {% endif %}
+                          </tbody>
+                        </table>
+                      </div>
+                </div>
+                <br>
+                <a class="w3-btn w3-round w3-green w3-section w3-ripple w3-block" href="{% url 'lease-agreement' tenant.id %}" role="button">Generate Lease Agreement  <i class="fas fa-file-pdf"></i></a>
+                <a class="w3-btn w3-round w3-blue w3-section w3-ripple w3-block" href="#" role="button">Generate Invoice  <i class="fas fa-file-pdf"></i></a>
+              </div>
+            </div>
+
+            {% elif not units %}
+        <div class="col-sm-7">
+            <div class="container-fluid">
+                <div class="w3-card w3-white w3-round w3-padding w3-center">
+                    <p class="text-muted">This Tenant has not been allocated a Unit...Click below to access vacant units.</p>
+                    <a class="btn" id="vacate" href="{% url 'list-vacant' %}" role="button">Place Tenant</a>
+                     {% endif %}
+
+                    <br>
+
+                </div>
+            </div>
+         </div>
+     </div>
+
+{% endblock content %}
+
+
+

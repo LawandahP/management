@@ -1,0 +1,29 @@
+{% extends 'landlord/base.html' %}
+{% block content %}
+<style>
+h3 {
+  color: #191970;
+  font-weight: bold;
+}
+</style>
+<div class="form-group">
+  <a class="badge badge-secondary" href="{% url 'dashboard' %}">Home</a>
+    <a class="badge badge-primary" href="{% url 'list-user' %}">All Tenants</a>
+  <a class="badge badge-info" href="{% url 'user-detail' object.id %}">Tenant detail</a>
+   <span class="badge badge-danger">Delete Tenant</span>
+</div>
+<div class="w3-card w3-white w3-round-large w3-padding">
+  <form method="post">
+    {% csrf_token %}
+
+          <h3>Delete Tenant</h3>
+          <h4>Do you want to delete Tenant "{{object.Tenant_Full_Names}}"?</h4>
+          <div class="form-group">
+            <button class="btn btn-danger" type="submit" >Confirm Delete</button>
+            <a class="btn btn-secondary" href="{% url 'user-detail' object.id %}">Cancel</a>
+          </div>
+
+
+  </form>
+</div>
+{% endblock content %}

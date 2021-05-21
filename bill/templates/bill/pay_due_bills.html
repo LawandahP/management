@@ -1,0 +1,76 @@
+{% extends 'landlord/base.html' %}
+{% block content %}
+<style>
+.card {
+  font-size: 10;
+  padding: 10px 10px 10px 10px
+}
+h3 {
+  color:#191970;
+  font-weight: bold;
+}
+
+.w3-Icon {
+    color: red;
+    font-size: 25px;
+}
+.w3-Icon:hover {
+    color: blue;
+    font-size: 27px;
+}
+#btn {
+    background-color: #FA8072;
+    color: white;
+}
+#btn:hover {
+    color: white;
+    transform: scale(1.05);
+}
+
+</style>
+<div class="form-group">
+  <a class="badge badge-secondary" href="{% url 'dashboard' %}">Home</a>
+   <span class="badge badge-danger">Pay Due Bills</span>
+
+</div>
+<div class="w3-card w3-white w3-padding">
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Unit</th>
+          <th>Tenant</th>
+          <th>Rent</th>
+          <th>Monthly Bills</th>
+          <th>Total Payable</th>
+          <th>Paid In</th>
+            <th>Balance</th>
+            <th>status</th>
+        </tr>
+      </thead>
+      <tbody>
+
+      {% for bill in bills %}
+          <tr>
+            <td>{{forloop.counter}}</td>
+              <td>{{bill.unit}}</td>
+            <td>{{bill.unit.tenant}}</td>
+            <td>{{bill.unit.rent}}</td>
+            <td>{{bill.amount}}</td>
+            <td></td>
+             <td></td>
+            <td></td>
+            <td><span class="badge badge-danger">{{bill.status}}</span></td>
+
+          </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+    <div class="form-group">
+<!--      <legend class="border-top pt-3"><a class="btn btn-info" href="/">Add new</a></legend>-->
+    </div>
+  </div>
+</div>
+</div>
+{% endblock content %}

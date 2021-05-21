@@ -1,0 +1,78 @@
+{% extends 'landlord/base.html' %}
+{% block content %}
+<style>
+.card {
+  background-color: #fffff;
+  color: teal;
+  font-size: 10;
+  padding: 10px 10px 10px 10px
+}
+h3 {
+  color:#191970;
+  font-weight: bold;
+}
+
+#btn {
+    background-color: #FA8072;
+    color: white;
+}
+#btn:hover {
+    color: white;
+    transform: scale(1.05);
+}
+
+#addNew {
+  color: white; 
+  background-color: #191970;
+}
+#addNew:hover {
+transform: scale(1.01);
+}
+
+</style>
+<div class="form-group">
+  <a class="badge badge-secondary" href="/">Home</a>
+   <span class="badge badge-danger">All Landlords</span>
+
+</div>
+
+<div class="w3-card w3-round w3-white w3-padding">
+  <h3 style="color:#191970;"> All Landlords</h3>
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Name</th>
+          <th>Gender</th>
+          <th>National ID</th>
+          <th>Phone No</th>
+            <th>Emergency Contact</th>
+            <th>Email</th>
+          <th>Details</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for landlord in landlords %}
+        <tr>
+          <td>{{forloop.counter}}</td>
+          <td>{{landlord.Full_Name|upper}}</td>
+            <td>{{landlord.gender}}</td>
+            <td>{{landlord.National_ID}}</td>
+            <td>{{landlord.phone_number1}}</td>
+            <td>{{landlord.phone_number2}}</td>
+          <td>{{landlord.email|lower}}</td>
+          <td><a class="btn" id="btn" href="{% url 'landlord-detail' landlord.id %}" role="button"><i class="fas fa-info-circle"></i></a></td>
+          <td><a class="btn btn-danger" href="{% url 'delete-landlord' landlord.id %}" role="button"><i class="fas fa-trash-alt"></i></a></td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <div class="form-group">
+    <legend class="border-top pt-3"><a class="btn" ID="addNew" href="{% url 'add-landlord' %}">Add new</a></legend>
+  </div>
+</div>
+</div>
+
+{% endblock content %}

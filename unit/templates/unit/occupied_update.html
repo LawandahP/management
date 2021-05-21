@@ -1,0 +1,55 @@
+{% extends 'landlord/base.html' %}
+{% block content %}
+{% load crispy_forms_tags %}
+<style>
+.card {
+  font-size: 10;
+  padding: 10px 10px 10px 10px
+}
+h3, h2 {
+  color:#191970;
+  font-weight: bold;
+}
+.btn {
+    background-color: #FA8072;
+    color: white;
+}
+.btn:hover {
+    color: white;
+    transform: scale(1.1);
+}
+#updateOccupied {
+    background-color: #191970;
+    color: white;
+}
+#updateOccupied:hover {
+    transform: scale(1.1);
+    color: white;
+}
+</style>
+<div class="form-group">
+  <a class="badge badge-secondary" href="{% url 'dashboard' %}">Home</a>
+  <a class="badge badge-primary" href="{% url 'list-unit' %}">All Units</a>
+  {% if object.confirm_allocation and object.tenant %}
+    <a class="badge badge-info" href="{% url 'unit-detail' object.id %}">Occupied-Unit detail</a>
+    {% elif not object.confirm_allocation and not object.tenant%}
+    <a class="badge badge-info" href="{% url 'unit-detail' object.id %}">Vacant-Unit detail</a>
+    {% endif %}
+   <span class="badge badge-warning">Update Unit</span>
+</div>
+
+<div class="w3-card w3-round w3-white w3-padding">
+  <h2>Edit Occupied</h2>
+  <form method="POST">
+    {% csrf_token %}
+
+      {{ form|crispy }}
+
+    <div class="form-group">
+      <button type="submit" id="updateOccupied" class="btn">update</button>
+      <a class="btn" href="{% url 'list-unit' %}">cancel</a>
+    </div>
+  </form>
+</div>
+
+{% endblock content %}

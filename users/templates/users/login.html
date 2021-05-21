@@ -1,0 +1,114 @@
+{% load static %}
+{% load crispy_forms_tags %}
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!--    <meta http-equiv="X-UA-Compatible" content="IE=edge">-->
+
+
+    <title>Home|Admin</title>
+
+    <!-- Bootstrap CSS CDN -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+
+    <!-- Our Custom CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static '/css/main.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static '/css/w3.css' %}">
+
+    <!-- Font Awesome JS -->
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
+
+</head>
+
+<style>
+body {
+	background-image: linear-gradient(to right, #e44d26, purple, #03001e);
+}
+.page-content {
+	width: 100%;
+	margin:  0 auto;
+	display: flex;
+	display: -webkit-flex;
+	justify-content: center;
+	-o-justify-content: center;
+	-ms-justify-content: center;
+	-moz-justify-content: center;
+	-webkit-justify-content: center;
+	align-items: center;
+	-o-align-items: center;
+	-ms-align-items: center;
+	-moz-align-items: center;
+	-webkit-align-items: center;
+	padding-top: 80px;
+}
+
+.w3-icon {
+font-size: 25px;
+color: indigo;
+}
+.w3-row {
+text-align: center;
+}
+
+.w3-btn {
+    background-color: #191970;
+    color: white;
+}
+.w3-btn:hover {
+    color: white;
+    transform: scale(1.01);
+
+
+</style>
+
+<div class="page-content">
+	<div class="w3-container">
+		<div class="w3-card w3-white w3-round w3-padding">
+			<form action="" method="post">
+				{% csrf_token %}
+
+				<div class="w3-center id=image">
+					<img src="{% static 'media/kanjologin.png' %}" alt="" width="200" height="50">
+				</div>
+
+				<div class="w3-container">
+					{% if messages %}
+						{% for message in messages %}
+							<div class="alert alert-{{ message.tags }} alert-dismissible">
+								<button type="button" class="close" data-dismiss="alert">&times;</button>
+							  {{ message }}.
+							</div>
+						{% endfor %}
+					{% endif %}
+				</div>
+				<div class="w3-center">
+					<div class="w3-row w3-section">
+						<input type="text" name="username" id="username" class="w3-input w3-border w3-round" placeholder="Username.." required>
+					</div>
+
+					<div class="w3-row w3-section">
+						<input type="password" name="password" id="password" class="w3-input w3-border w3-round" placeholder="Password.." required>
+					</div>
+
+					<button class="w3-btn w3-round w3-section w3-ripple w3-block" type="submit">LOGIN</button>
+				</div>
+			</form>
+			<div class="border-top pt-2">
+				<div class="w3-center">
+					<small class="text-muted">
+						Want to register as Tenant ? <a class="ml-2" href="{% url 'register' %}">Register</a>
+					</small>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+</html>
+
+
+
+

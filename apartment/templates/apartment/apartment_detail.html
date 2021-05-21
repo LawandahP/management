@@ -1,0 +1,97 @@
+{% extends 'landlord/base.html' %}
+{% block content %}
+{% load static %}
+<style>
+h1, h2, h3, h4{
+  color: #191970;
+  font-weight: bold;
+}
+.fas fa-user-tie {
+  font-size: 55px;
+}
+#occupied {
+  color: white;
+  background-color: #191970;
+}
+table {
+ text-align: left;
+}
+
+#vacant {
+  color: white;
+  background-color: red;
+}
+#vacant:hover {
+transform: scale(1.05);
+}
+</style>
+<div class="form-group">
+  <a class="badge badge-secondary" href="{% url 'dashboard' %}">Home</a>
+   <a class="badge badge-primary" href="{% url 'list-apartment' %}">All Apartments</a>
+  <span class="badge badge-info" >Apartment detail</span>
+</div>
+
+  <div class="w3-card  w3-round-large w3-center w3-white w3-padding">
+    <div class="row">
+      <div class="col-sm-5">
+        <img src="{% static 'media/apartment1.png' %}" class="img-circle" alt="" width="200" height="190">
+      </div>
+
+      <div class="col-sm-6">
+          <a class="text"><h4>{{apartment.name}}</h4></a>
+        <ul class="list-group">
+          <li class="list-group-item d-flex justify-content-between align-items-center">Building Type:<span class="badge badge-primary right"> {{apartment.type}}</span></li>
+          <li class="list-group-item d-flex justify-content-between align-items-center">Units Registered:<span class="badge">{{units_count}}</span></li>
+          <li class="list-group-item d-flex justify-content-between align-items-center">County:<span class="badge">{{apartment.county}}</span></li>
+          <li class="list-group-item d-flex justify-content-between align-items-center">Location:<span class="badge">{{apartment.location}}</span></li>
+          <li class="list-group-item d-flex justify-content-between align-items-center">Location Description:<span class="badge badge-primary">{{apartment.location_description}}</span></li>
+          <li class="list-group-item d-flex justify-content-between align-items-center">Owner:<span class="badge">{{apartment.owner}}</span></li>
+        </ul>
+        <br>
+        <div class="form-group">
+          <a class="btn btn-info" href="{% url 'update-apartment' apartment.id %}">Edit apartment Info</a>
+          <a class="btn btn-danger" href="{% url 'delete-apartment' apartment.id %}">Delete</a>
+          <a class="btn btn-primary" href="{% url 'add-unit' %}">Attach Unit +</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
+  <div class="w3-card w3-round w3-white w3-padding">
+    <div class="form-group">
+      <h4>Units Registered</h4>
+    </div>
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Unit No.</th>
+            <th>Type</th>
+            <th>Rent(Monthly)</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for unit in units %}
+          <tr>
+            <td>{{unit.unit_no}}</td>
+            <td>{{unit.unit_type}}</td>
+            <td>{{unit.rent}}</td>
+            <td><a class="btn btn-primary" href="{% url 'unit-detail' unit.id%}" role="button">Details</a></td>
+            {% if unit.confirm_allocation is False or unit.tenant is None %}
+                <td><a class="btn" id="vacant" href="{% url 'assign-unit' unit.id %}" role="button">vacant <i class="fas fa-users"></i></a></td>
+              {% endif %}
+
+              {% if unit.confirm_allocation and unit.tenant %}
+                <td><button class="btn" id="occupied" role="button">occupied <i class="fas fa-users"></i></button></td>
+              {% endif %}
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+{% endblock content %}
+
+

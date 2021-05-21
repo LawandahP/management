@@ -1,0 +1,37 @@
+
+    <meta charset="UTF-8">
+    <title>Deposits</title>
+
+
+<div class="container-fluid">
+        <div class="w3-card w3-round w3-white w3-padding">
+          <h4>Deposits Paid In By Tenants</h4>
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                 <th>Unit No.</th>
+                <th>Type</th>
+                  <th>Building</th>
+                  <td>Deposit Amount</td>
+                  <th>Deposit Paid</th>
+                  <th>Balance</th>
+                  <th></th>
+              </tr>
+            </thead>
+            <tbody>
+                {% for unit in units %}
+                  <tr>
+                    <td>{{unit.unit_no}}</td>
+                    <td>{{unit.unit_type}}</td>
+                    <td>{{unit.select_apartment}}</td>
+                  <td>{{unit.deposit}}</td>
+                  <td>{{unit.placement_date}}</td>
+                  {% if unit.confirm_allocation and unit.tenant %}
+                    <td><button class="btn" id="occupied" role="button">occupied <i class="fas fa-users"></i></button></td>
+                  {% endif %}
+                </td>
+              </tr>
+            {% endfor %}
+            </tbody>
+          </table>

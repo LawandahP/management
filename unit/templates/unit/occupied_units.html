@@ -1,0 +1,93 @@
+{% extends 'landlord/base.html' %}
+{% block content %}
+<style>
+.card {
+  background-color: #fffff;
+  color: teal;
+  font-size: 10;
+  padding: 10px 10px 10px 10px
+}
+h3 {
+  color:#191970;
+  font-weight: bold;
+
+</style>
+
+<div class="form-group">
+  <a class="badge badge-secondary" href="{% url 'dashboard' %}">Home</a>
+   <span class="badge badge-danger">Occupied Units</span>
+
+</div>
+
+  <div class="w3-card w3-round w3-white w3-padding">
+    <div class="form-group">
+      <h3>Occupied Units</h3>
+    </div>
+
+
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Unit No.</th>
+            <th>Type</th>
+            <th>Rent(Monthly)</th>
+            <th>Building</th>
+            <th>Tenant Names</th>
+            <th>Entry Date</th>
+
+          </tr>
+        </thead>
+        <tbody>
+        {% for unit in units %}
+          {% if unit.confirm_allocation is True %}
+            {% if unit.tenant %}
+              {% if unit.tenant is not None %}
+          <tr>
+            <td>{{forloop.counter}}</td>
+            <td>{{unit.unit_no}}</td>
+            <td>{{unit.unit_type}}</td>
+            <td>{{unit.rent}}</td>
+            <td>{{unit.select_apartment}}</td>
+            <td>{{unit.tenant}}</td>
+            <td>{{unit.placement_date}}</td>
+
+            <td>
+                <a class="btn btn-danger" href="{% url 'vacate-tenant' unit.id %}" role="button">Vacate <i class="fas fa-users"></i></a>
+            </td>
+          </tr>
+                {% endif %}
+              {% endif %}
+            {% endif %}
+          {% endfor %}
+
+
+
+        </tbody>
+      </table>
+
+        <nav aria-label="...">
+          <ul class="pagination">
+            <li class="page-item disabled">
+              <a class="page-link" href="#" tabindex="-1">previous</a>
+            </li>
+            {% for n in page.paginator.page_range %}
+              <li class="page-item"><a class="page-link" href="?page={{ n }}">{{ n }}</a></li>
+            {% endfor %}
+
+            <li class="page-item active">
+              <a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item">
+              <a class="page-link" href="#">next</a>
+            </li>
+          </ul>
+        </nav>
+
+
+    </div>
+  </div>
+</div>
+{% endblock content %}

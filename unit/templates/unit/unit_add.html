@@ -1,0 +1,83 @@
+{% extends 'landlord/base.html' %}
+{% block content %}
+{% load crispy_forms_tags %}
+<style>
+.card {
+  font-size: 10;
+  padding: 10px 10px 10px 10px
+}
+h3, h2 {
+  color:#191970;
+  font-weight: bold;
+}
+.btn {
+    background-color: #191970;
+    color: white;
+}
+.btn:hover {
+    color: white;
+    transform: scale(1.05);
+}
+
+#viewList {
+  color: white;
+  background-color: #FA8072;
+}
+#viewList:hover {
+transform: scale(1.05);
+}
+</style>
+<div class="form-group">
+  <a class="badge badge-secondary" href="{% url 'dashboard' %}">Home</a>
+   <span class="badge badge-danger">Add Unit</span>
+</div>
+
+<div class="w3-card w3-round w3-white w3-padding">
+  <h2> Add Units To an Apartment</h2>
+  <p class="text-muted">After the Unit is registered successfully, you'll proceed and assign Tenant.</p>
+  <form method="POST">
+    {% csrf_token %}
+
+      {{ form|crispy }}
+
+    <div class="form-group">
+      <button type="submit" class="btn">save</button>
+      <a class="btn" id="viewList" href="{% url 'list-unit' %}">view list</a>
+    </div>
+  </form>
+</div>
+
+<br>
+
+<div class="w3-card w3-white w3-round w3-padding">
+  <div class="form-group">
+    <h3>Selected Apartment Registered Units</h3>
+  </div>
+
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Unit No.</th>
+          <th>Type</th>
+          <th>Rent(Monthly)</th>
+          <th>Details</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for unit in units %}
+
+        <tr>
+          <td>{{unit.unit_no}}</td>
+          <td>{{unit.unit_type}}</td>
+          <td>{{unit.rent}}</td>
+          <td><a class="btn btn-primary" href="{% url 'unit-detail' unit.id %}" role="button">Details</a></td>
+        </tr>
+
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock content %}
+

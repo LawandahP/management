@@ -1,0 +1,27 @@
+{% extends 'landlord/base.html' %}
+{% block content %}
+<style>
+h3 {
+  color: #191970;
+  font-weight: bold;
+}
+</style>
+<div class="form-group">
+  <a class="badge badge-secondary" href="{% url 'dashboard' %}">Home</a>
+  <a class="badge badge-primary" href="{% url 'list-apartment' %}">All Apartments</a>
+  <a class="badge badge-info" href="{% url 'apartment-detail' obj.id %}">Apartment detail</a>
+   <span class="badge badge-danger">Delete Apartment</span>
+</div>
+<div class="w3-card w3-round-large w3-padding">
+  <form method="post">
+    {% csrf_token %}
+      <h3>Delete Apartment</h3>
+          <h4>Do you want to delete Apartment "{{obj.name}}"?</h4>
+          <div class="form-group">
+            <button class="btn btn-danger" type="submit" >Confirm Delete</button>
+            <a class="btn btn-secondary" href="{% url 'list-apartment' %}">Cancel</a>
+          </div>
+
+  </form>
+</div>
+{% endblock content %}

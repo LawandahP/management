@@ -1,0 +1,75 @@
+{% extends 'landlord/base.html' %}
+{% block content %}
+<style>
+.card {
+  font-size: 10;
+  padding: 10px 10px 10px 10px
+}
+h3 {
+  color:#191970;
+  font-weight: bold;
+}
+
+.w3-Icon {
+    color: red;
+    font-size: 25px;
+}
+.w3-Icon:hover {
+    color: blue;
+    font-size: 27px;
+}
+#btn {
+    background-color: #FA8072;
+    color: white;
+}
+#btn:hover {
+    color: white;
+    transform: scale(1.05);
+}
+
+</style>
+<div class="form-group">
+  <a class="badge badge-secondary" href="{% url 'dashboard' %}">Home</a>
+   <span class="badge badge-primary">All Tenants</span>
+
+</div>
+<div class="w3-card w3-white w3-padding">
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Name</th>
+          <th>ID No.</th>
+          <th>Phone No.</th>
+          <th>Details</th>
+        </tr>
+      </thead>
+      <tbody>
+
+      {% for user in users %}
+        {% if user.is_tenant %}
+          <tr>
+            <td>{{forloop.counter}}</td>
+            <td>{{user.Tenant_Full_Names|upper}}</td>
+            <td>{{user.National_ID}}</td>
+            <td>{{user.phone_number1}}</td>
+            <td><a class="btn" id="btn" href="{% url 'user-detail' user.id %}" role="button"><i class="fas fa-info-circle"></i></a></td>
+            <td><a class="btn btn-danger" href="{% url 'delete-user' user.id %}" role="button"><i class="fas fa-trash-alt"></i></a></td>
+            <td>
+              <div class="w3-Icon">
+                <a href="{% url 'lease-agreement' user.id %}"><i class="fas fa-file-pdf">{{user.Lease_Agreement }}</i>
+              </div>
+            </td>
+          </tr>
+        {% endif %}
+      {% endfor %}
+      </tbody>
+    </table>
+    <div class="form-group">
+<!--      <legend class="border-top pt-3"><a class="btn btn-info" href="/">Add new</a></legend>-->
+    </div>
+  </div>
+</div>
+</div>
+{% endblock content %}

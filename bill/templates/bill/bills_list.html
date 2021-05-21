@@ -1,0 +1,101 @@
+{% extends 'landlord/base.html' %}
+{% block content %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+<script src="{% url 'js-catlog' %}"></script>
+<script src="{% static '/admin/js/core.js' %}"></script>
+<link rel="stylesheet" href="{% static 'admin/css/widgets.css' %}">
+
+<style>
+.card {
+  font-size: 10;
+  padding: 10px 10px 10px 10px
+}
+h3 {
+  color:#191970;
+  font-weight: bold;
+</style>
+
+
+
+<div class="form-group">
+  <a class="badge badge-secondary" href="{% url 'dashboard' %}">Home</a>
+   <span class="badge badge-primary">All Bills</span>
+</div>
+
+<div class="w3-card w3-white w3-padding w3-round">
+<!--  <form method="get">-->
+<!--    {{myFilter.media}}-->
+<!--    <p class="text-muted">-->
+<!--      Filter By:-->
+<!--    </p>-->
+<!--      {{myFilter.form}}-->
+<!--&lt;!&ndash;      {{myFilter.form.bill.label}}: {{myFilter.form.bill}}&ndash;&gt;-->
+<!--&lt;!&ndash;      {{myFilter.form.amount.label}}: {{myFilter.form.amount}}&ndash;&gt;-->
+<!--&lt;!&ndash;      {{myFilter.form.date}}&ndash;&gt;-->
+<!--    <button class="btn btn-primary" type="submit">search</button>-->
+<!--</div>-->
+    <form method="post">
+        {% csrf_token %}
+          <div class="form-row">
+            <div class="form-group col-sm-6">
+              From: <input type="date" name="start_date" class="form-control" required>
+            </div>
+            <div class="form-group col-sm-6">
+              To: <input type="date" name="end_date" class="form-control" required>
+            </div>
+            <div class="form-group col-sm-6">
+              <button class="btn btn-info" type="submit">search <i class="fas fa-search"></i></button>
+            </div>
+
+        </div>
+
+    </form>
+</div>
+<br>
+
+    <div class="w3-card w3-white w3-padding w3-round">
+        <h3>All Bills</h3>
+
+
+      <div class="table table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Bill Name</th>
+              <th>Amount</th>
+              <th>Tenant</th>
+                <th>For Unit</th>
+              <th>Date</th>
+              <td>Status</td>
+            </tr>
+          </thead>
+          <tbody>
+          {% for bill in bills %}
+    <!--<i class="fas fa-ellipsis-v"></i>-->
+    <!--      -->
+
+              <tr>
+                <td>{{forloop.counter}}</td>
+                <td>{{bill.bill}}</td>
+                <td>{{bill.amount}}</td>
+                <td>{{bill.unit.tenant}}</td>
+                <td>{{bill.unit}}</td>
+                  <td>{{bill.created_at}}</td>
+                <td><span class="badge badge-danger">{{bill.status}}</span></td>
+    <!--            <td><button onclick="myFunction()"><i class="fas fa-ellipsis-h"></i></button></td>-->
+                <td><a class="btn btn-info" href="{% url 'update-bills' bill.id %}" role="button"><i class="fas fa-info-circle"></i></a></td>
+                <td><a class="btn btn-danger" href="{% url 'delete-bills' bill.id %}" role="button"><i class="fas fa-trash-alt"></i></a></td>
+               </tr>
+
+          {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+</div>
+</form>
+
+{% endblock content %}

@@ -1,0 +1,41 @@
+{% extends 'landlord/base.html' %}
+{% block content %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+<script src="{% url 'js-catlog1' %}"></script>
+<script src="{% static '/admin/js/core.js' %}"></script>
+<link rel="stylesheet" href="{% static 'admin/css/widgets.css' %}">
+
+<style>
+.card {
+  font-size: 10;
+  padding: 10px 10px 10px 10px
+}
+h3, h2 {
+  color:#191970;
+  font-weight: bold;
+}
+</style>
+<div class="form-group">
+  <a class="badge badge-secondary" href="{% url 'dashboard' %}">Home</a>
+  <a class="badge badge-secondary" href="{% url 'list-vacant' %}">Vacant Units</a>
+   <span class="badge badge-danger">Allocate Tenant Unit</span>
+</div>
+<div class="w3-card w3-round w3-white w3-padding">
+  <h2>Allocate Unit to a Tenant</h2>
+
+  <form method="POST">
+    {% csrf_token %}
+      {{form.media}}
+      {{ form|crispy }}
+
+    <div class="form-group">
+      <button type="submit" class="btn btn-primary">finalize allocation</button>
+      <a class="btn btn-secondary" href="{% url 'list-vacant' %}">cancel</a>
+    </div>
+  </form>
+</div>
+
+
+{% endblock content %}

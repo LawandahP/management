@@ -1,0 +1,28 @@
+{% extends 'landlord/base.html' %}
+{% block content %}
+<style>
+h3 {
+  color: #191970;
+  font-weight: bold;
+}
+</style>
+<div class="form-group">
+  <a class="badge badge-secondary" href="{% url 'dashboard' %}">Home</a>
+    <a class="badge badge-primary" href="{% url 'list-bills' %}">All Bills</a>
+   <span class="badge badge-danger">Delete Bill</span>
+</div>
+<div class="w3-card w3-white w3-round-large w3-padding">
+  <form method="post">
+    {% csrf_token %}
+
+          <h3>Delete Bill</h3>
+          <h4>Do you want to delete Bill "{{bill.bill}}" for {{bill.unit}}?</h4>
+          <div class="form-group">
+            <button class="btn btn-danger" type="submit" >Confirm Delete</button>
+            <a class="btn btn-secondary" href="{% url 'list-bills' %}">Cancel</a>
+          </div>
+
+
+  </form>
+</div>
+{% endblock content %}

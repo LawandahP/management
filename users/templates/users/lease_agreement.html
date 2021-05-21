@@ -1,0 +1,310 @@
+{% block content %}
+{% load static %}
+<title>{{tenant}}</title>
+
+<style>
+
+@page {
+    size: "A4";
+    margin: 1 1.5cm 1cm 1.5cm;
+    line-height: 1.5;
+
+    @bottom-left {
+        content: "{{tenant}}";
+    }
+    @bottom-right {
+        content: "{{forloop.counter}}";
+    }
+    @top-left {
+        content: {{tenant.profile.image.url}};
+    }
+}
+.header {
+    font-size: 28px;
+    font-weight: bold;
+    text-align: center;
+}
+.header2 {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+}
+.text-center {
+    text-align: center;
+    font-weight: bold;
+}
+
+.text-left {
+    text-align: left;
+    Spacing: 2.5rem;
+}
+div.a {
+    line-height: 1.6;
+}
+div.b {
+    line-height: 1.5;
+}
+.alignRight {
+    float: right;
+}
+.alignLeft {
+    float: left;
+}
+</style>
+<body>
+
+    <div class="header">
+        <strong>REPUBLIC OF KENYA</strong>
+    </div>
+    <div class="header2">
+        <strong>LEASE AGREEMENT</strong>
+    </div>
+    <br>
+    {% if units %}
+    {% for unit in units %}
+        <div class="text" id="text-left">
+            This AGREEMENT is made on the
+            <strong>{{unit.placement_date}}</strong>
+
+        </div>
+    <br>
+    <div class="text-center">
+        BETWEEN
+    </div>
+    <br>
+    <div class="a">
+        <strong>{{unit.select_apartment.owner}}</strong> of P.O Box {{unit.select_apartment.owner.post_office_box}}
+        in the Republic of Kenya(hereinafter called the “The Lessor” which expression shall where the
+        context so admits shall be deemed to include its heirs, administrators and assignee) of the other part.
+    </div>
+    <br>
+
+    <div class="text-center">
+        AND
+    </div>
+
+    <br>
+
+    <div class="a">
+        <strong>{{tenant}}</strong> holder of identity Card Number <strong>{{tenant.National_ID}}</strong>,
+        {{tenant.occupation_status}} at {{tenant.at}}
+        (Hereinafter called “The Lessee” which expressions shall where the context so admits shall be
+        deemed to include its heirs, administrators and assignee) of the other part.
+    </div>
+    <br>
+
+    <strong>A.  <u>WHERE IT IS AGREED</u></strong> by and between the parties as followed:-
+    <div class="a">
+        <ol>
+        <li>That the property is a Residential premises which is a flat consisting of
+            {% for unit in units %}
+            <strong>{{unit.unit_type}}.</strong>
+            {% endfor %}
+        </li>
+        <li>That the Landlord shall let and The Tenant shall take for a term of One (1) Year commencing
+            <strong>{{unit.placement_date}}</strong> and terminating on 31 st December 2021 the premises known as
+            <strong>{{unit.select_apartment.name}},</strong> house <strong>No.{{unit.unit_no}}</strong> in
+            {{unit.select_apartment.county}}, located at {{unit.select_apartment.location}}
+            {{unit.select_apartment.location_description}}.
+        </li>
+        <li>That the rent of the said premises is unfurnished shall be
+            <strong>Kshs.
+            {% for unit in units %}
+                {{unit.rent}}
+            {% endfor %}
+
+            </strong>
+             per month payable MONTHLY in advance, on or before
+            5 th day of every month.
+        </li>
+        <li>That, a refundable SECURITY DEPOSIT equivalent to ONE (1) MONTHS rent (Kshs.
+            {% for unit in units %}
+                {{unit.rent}}
+            {% endfor %}) will be kept by the landlord and shall be refundable (without interest) at the expiry of
+            the lease after the tenant has successfully handed over the premises and after fulfilling all the
+            obligations contained in this lease and only after inspection report is out together with the
+            quotation to repair and/or make it good from the landlord.
+        </li>
+        </ol>
+    </div>
+
+    <strong>B.  <u>THE TENANT AGREES</u></strong> as follows:-
+    <div class="a">
+        <ol>
+            <li>To pay the rent on the days and in the manner aforesaid without any deductions</li>
+            <li>That the Tenant is to pay the monthly rent up to the last month of the lease and shall not use
+                the security deposit as rent or use any part thereof.
+            </li>
+            <li>
+                <ul>
+                    <li>
+                        To pay all the electricity, water conservancy and telephone (if any) charges arising out of
+                        the Tenant’s occupation of the said premises.
+                    </li>
+                    <li>
+                        To pay water & electricity bills regularly without any delay or default and release the
+                        copies of the same to the Landlords Agent after every Three (3) months or when
+                        requested.
+                    </li>
+                </ul>
+            <li>That, the Tenant shall not create, allow or permit PUBLIC NUISANCE or any annoyance
+                to other Tenants or the adjoining Neighbors.
+            </li>
+            <li>That, at all times during the said term to keep the interior of the said premises and
+                improvements thereon in good order, repair and conditions, fair wear and tear exempted and
+                yield up the same at the expiration or sooner determination of the said term.
+            </li>
+            <li>That all times during the said term to keep the garden and ground forming part of the said pre
+                Premises in a clean and tidy condition as well as keeping from all blockages and obstructions
+                Of which in any case if there shall be any blockages it shall be the Tenants responsibility to
+                unblock or pay the cost of the same.
+            </li>
+            <li>That, The Tenant shall be responsible for all normal repairs to water taps, light fittings, locks
+                and fasteners and shall not nail the walls.
+            </li>
+            <li>That, The Tenant shall not make any alterations in or additional to the said premises
+                (including boundaries and fences) and shall not cut timber nor remove any trees.
+            </li>
+            <li>That, The Tenant shall make periodic inspections of the said premises and shall report
+                (immediately to the Landlord or his authorized Agent, the presence therein of any white ants
+                bees or any destructive insects or any wet or dry rot.
+            </li>
+            <li>That, The Tenant shall permit the Landlord or his Agent at all reasonable times to enter upon
+                the said premises to view the condition thereof. The Tenant shall within ten days after
+                receipt of notice from the landlord or his authorized Agent to that effect makes good any
+                defects for which he is liable under the terms of this contract.
+            </li>
+            <li>That, The Tenant shall use the said premises as a Private House only and shall not carry any
+                trade or business of any kind in the premises.
+            </li>
+            <li>
+                That, The Landlord or his authorized Agent shall not be responsible or liable of the internal
+                security of the premises from the date of handing over the keys (or the access) to the Tenant.
+            </li>
+
+            <li>That, The Tenant shall not sub-let, assign, transfer or part with the possession of the said
+                premises or any part thereof without written consent from the landlord or his authorized
+                Agent first had and obtained and that any such unauthorized sub-letting assignment, transfer
+                or parting with the possession of the said premises or any part thereof will mean an
+                immediate forfeiture of this tenancy entitling the Landlord or his authorized Agent to
+                re-entre upon the said premises and take possession of the same forthwith.
+            </li>
+
+            <li>That, The Tenant shall at the time of expiration of the tenancy deliver up to the Landlord or
+                his authorized Agent the premises and shall re-decorate the premises with ONE (1) coat of
+                the first quality plastic paint to the satisfaction of the Landlord or his authorized Agent.
+            </li>
+
+            <li>That, The Tenant should pay the cost of this Agreement (nonrefundable).</li>
+            <li>
+                That, The Tenant shall not store, keep or allow storage of any offensive articles (e.g.
+                explosives, drugs or weapons) in the premises unless otherwise agreed or approved (as per
+                the laws of Kenya) in which case, The Tenant shall be responsible for fulfillment of all legal
+                requirements and taking care of all the involved risks which include taking insurance cover
+                for the same as the Landlord and his authorized Agent shall not be held responsible.
+            </li>
+        </ol>
+    </div>
+
+    <strong>C.  <u>THE LANDLORD AGREES</u></strong> as follows:
+    <div class="a">
+        <ol>
+            <li>Not to make personal use of the compound of the said premises during the term of tenancy.</li>
+            <li>To keep the structure of the said premises in good state of repair and to effect any repairs for
+                which he is liable.
+            </li>
+            <li>To pay ground rent (if any) and the unimproved site value tax for the said premises.</li>
+        </ol>
+    </div>
+    <div class="b">
+        <strong>D.  <u>IT IS HEREBY AGREED BETWEEN THE LANDLORD AND THE TENANT</u></strong>
+        <ol>
+            <li>If the rent hereby reserved shall be in arrears for a period of seven (7) days whether
+                legally demanded or not or if the tenant shall commit any breach of any covenant on His
+                part herein contained then it shall be lawful for the Landlord to determine the lease at any
+                time by giving the Tenant a One (1) Months’ Notice requiring immediate possession of
+                the said premise, to re-entre thereof and to remove the Tenant or his family and all or any
+                person being therein or else levy distress against the tenant in respect of the arrears of
+                rent as provided by the distress for <strong>Rent Act Cap 293 of the Laws of Kenya.</strong>
+            </li>
+            <li>Any letter written to the Tenant due to non-payment or non-observance or non-
+                performance of this covenant a correspondence fee shall be charged.
+            </li>
+            <li>That, The Tenant shall be responsible for all the damages to the said premises incurred as
+                a result of negligence or willful act of the Tenant, his family, guest or servants and shall
+                replace with articles of similar a similar quality all items which shall be lost or damaged
+                during the tenancy.
+            </li>
+            <li>During the last two months of tenancy, a person holding an order from the Landlord or
+                his authorized Agent may come to your premises and shall be allowed to enter and
+                inspect the premises at reasonable hours.
+            </li>
+            <li>That if any of the above mentioned shall be desirous of terminating this Agreement
+                before the said period (A.2 above) shall give a written notice of not less than ONE(1)
+                Calendar Month or pay an amount equivalent to One Month Rent paid in lieu of such a
+                notice.
+            </li>
+        </ol>
+    </div>
+
+    <strong>IN WITNESS</strong> whereof the parties have a hereunto set their respective signatures the day and the year first herein written.
+    <br>
+    <br>
+    SIGNED FOR AND ON BEHALF OF<br>
+    <br>
+    <strong>THE TENANT</strong>
+    <br>
+
+    <u>{{tenant}}</u>
+    <br>
+
+    <div id="text">
+        <p class="alignLeft">NAME IN FULL</p>
+        <p class="alignRight">SIGNATURE</p>
+    </div>
+    <br>
+    <br>
+<hr>
+    <br>
+    SIGNED FOR AND ON BEHALF OF<br>
+    <strong>THE LANDLORD</strong>
+    <br>
+    <u>{{unit.select_apartment.owner}}</u>
+
+    <div id="line">
+        <p class="alignLeft">NAME IN FULL</p>
+        <p class="alignRight">SIGNATURE</p>
+    </div>
+</body>
+{% endfor %}
+{% elif not units %}
+<div class="col-sm-7">
+    <div class="container-fluid">
+        <div class="w3-card w3-white w3-round w3-padding w3-center">
+            <div class="text-center">
+                <H2 STYLE="color: red;">DATA NOT FOUND!!!</H2>
+            </div>
+            <p><strong>{{tenant}}</strong> may not have been allocated a Unit...Click below to access vacant units.</p>
+            <div class="text-center">
+                <a class="btn" id="vacate" href="{% url 'list-vacant' %}" role="button">Place Tenant</a>
+            </div>
+            <p>If that is not the case..feel free to contact your <strong>System Administrator</strong></p>
+
+             {% endif %}
+
+            <br>
+        </div>
+    </div>
+         </div>
+
+{% endblock content %}
+
+
+
+
+
+
+
+
+
+

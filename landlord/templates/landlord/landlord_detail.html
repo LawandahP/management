@@ -1,0 +1,90 @@
+{% extends 'landlord/base.html' %}
+{% block content %}
+{% load static %}
+<style>
+.w3-card, w3-round {
+  font-size: 40;
+  padding: 50px 50px 50px 50px
+}
+table {
+ text-align: left;
+}
+h1, h2, h3, h4{
+  color: #191970;
+  font-weight: bold;
+}
+.fas fa-user-tie {
+  font-size: 55px;
+}
+</style>
+<div class="form-group">
+  <a class="badge badge-secondary" href="{% url 'dashboard' %}">Home</a>
+   <a class="badge badge-danger" href="{% url 'landlord-list' %}">All Landlords</a>
+  <span class="badge badge-primary">Landlord detail</span>
+
+</div>
+  <div class="w3-card w3-round w3-white w3-padding w3-center">
+    <div class="row">
+      <div class="col sm-5">
+        <img src="{% static 'media/male1.png' %}" class="img-circle" alt="" width="200" height="190">
+      </div>
+
+      <div class="col-sm-6">
+          <a class="text"><h4>{{landlord.Full_Name|upper}}</h4></a>
+          <ul class="list-group">
+              <li class="list-group-item d-flex justify-content-between align-items-center">Owned Apartments:<span class="badge badge-primary right"> {{apartments_count}}</span></li>
+              <li class="list-group-item d-flex justify-content-between align-items-center">ID Number:<span class="badge">{{landlord.National_ID}}</span></li>
+              <li class="list-group-item d-flex justify-content-between align-items-center">Phone Number:<span class="badge">{{landlord.phone_number1}}</span></li>
+              <li class="list-group-item d-flex justify-content-between align-items-center">Emergency Contact:<span class="badge">{{landlord.phone_number2}}</span></li>
+              <li class="list-group-item d-flex justify-content-between align-items-center">Email Address:<span class="badge badge-primary">{{landlord.email|lower}}</span></li>
+              <li class="list-group-item d-flex justify-content-between align-items-center">P.O BOX:<span class="badge">{{landlord.post_office_box}}</span></li>
+          </ul>
+        <br>
+        <div class="form-group">
+          <a class="btn btn-secondary" href="{% url 'update-landlord' landlord.id %}">Edit</a>
+          <a class="btn btn-danger" href="{% url 'delete-landlord' landlord.id %}">Delete</a>
+          <a class="btn btn-primary" href="{% url 'add-apartment' %}">Attach Apartment +</a>
+        </div>
+      </div>
+    </div>
+  </div>
+<br>
+  <div class="w3-card w3-white w3-round w3-padding">
+    <div class="form-group">
+     <h4>Owned Apartments</h4>
+    </div>
+    <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Apartment Type</th>
+              <th>County</th>
+              <th>Location</th>
+              <th>Loc. Description</th>
+              <th>Details</th>
+            </tr>
+          </thead>
+          <tbody>
+          {% for apartment in apartments %}
+            <tr>
+              <td>{{apartment.name|title}}</td>
+              <td>{{apartment.type}}</td>
+              <td>{{apartment.county}}</td>
+              <td>{{apartment.location|title}}</td>
+              <td>{{apartment.location_description|lower}}</td>
+              <td><a class="btn btn-primary" href="{% url 'apartment-detail' apartment.id %}" role="button">Details</a></td</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+  </div>
+</div>
+
+
+
+
+
+
+{% endblock content %}

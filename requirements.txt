@@ -1,0 +1,11 @@
+django
+djangorestframework
+django_crispy_forms
+django-filter
+django-jazzmin
+pillow
+django-phonenumber-field
+phonenumbers
+psycopg2-binary
+weasyprint
+PyPDF2

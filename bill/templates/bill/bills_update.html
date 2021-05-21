@@ -1,0 +1,64 @@
+{% extends 'landlord/base.html' %}
+{% block content %}
+<!--{% load crispy_forms_tags %}-->
+<style>
+.card {
+  font-size: 10;
+  padding: 10px 10px 10px 10px
+}
+h3 {
+  color:#191970;
+  font-weight: bold;
+}
+.btn {
+    background-color: #191970;
+    color: white;
+}
+.btn:hover {
+    color: white;
+    transform: scale(1.05);
+}
+
+#viewList {
+  color: white;
+  background-color: #FA8072;
+}
+#viewList:hover {
+transform: scale(1.05);
+}
+
+</style>
+<div class="form-group">
+  <a class="badge badge-secondary" href="{% url 'dashboard' %}">Home</a>
+   <span class="badge badge-primary">Bills</span>
+</div>
+
+
+<div class="w3-card w3-round w3-white w3-padding">
+  <div class="w3-row w3-section">
+    <div class="form-group">
+      <h3 style="color:#191970;">Update Bill</h3>
+      <p class="text-muted">Attach Bills To Tenants.</p>
+    </div>
+  </div>
+
+  <form method="POST">
+      {{form.non_field_errors}}
+    {% csrf_token %}
+      <form method="POST">
+    {% csrf_token %}
+
+      {{ form|crispy }}
+
+    <div class="form-group">
+      <button type="submit" class="btn">save</button>
+      <a class="btn" ID="viewList" href="{% url 'list-bills' %}">cancel</a>
+    </div>
+  </form>
+</div>
+{% endblock content %}
+
+
+
+
+
